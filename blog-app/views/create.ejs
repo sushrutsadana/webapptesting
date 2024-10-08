@@ -1,0 +1,36 @@
+<%- include('partials/header') %>
+
+<h2>Create a New Post</h2>
+
+<form action="/create" method="POST">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required>
+
+    <label for="content">Content:</label>
+    <textarea id="content" name="content" required></textarea>
+
+    <button type="submit" class="submit-button">Create Post</button>
+</form>
+
+<h2>Recent Posts</h2>
+
+<% if (posts.length === 0) { %>
+    <p>No posts yet.</p>
+<% } else { %>
+    <ul class="post-list">
+        <% posts.forEach(post => { %>
+            <li>
+                <h3><%= post.title %></h3>
+                <p><%= post.content.substring(0, 100) %>...</p>
+                <div class="post-actions">
+                    <a href="/edit/<%= post.id %>">Edit</a>
+                    <form action="/delete/<%= post.id %>" method="POST">
+                        <button type="submit">Delete</button>
+                    </form>
+                </div>
+            </li>
+        <% }) %>
+    </ul>
+<% } %>
+
+<%- include('partials/footer') %>
